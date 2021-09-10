@@ -1,7 +1,7 @@
 #include <iostream>
 #include <iomanip>
-#include "Evento.h"
-// incluindo Evento.h, que j· contÈm a classe Aposta
+#include "Evento2.h"
+// incluindo Evento.h, que j√° cont√©m a classe Aposta
 
 #define MAX_EVENTS 100
 
@@ -19,54 +19,76 @@ void ExibeMenu(){
            "2 - Cadastrar aposta\n"
            "3 - Deletar aposta\n"
            "4 - Relatorio da Casa\n"
-           "5 - Sair\n\n";
+           "5 - Cadastrar Ganhador\n"
+           "6 - Sair\n\n";
 }
 
-void CriarEvento(){
-    cout << "Digite o nome do evento: ";
-    getline(cin, eventos[nEventos].nomeEvento); // lendo o nome do evento, a ˙nica coisa que o identifica
-    cout << "Informe a aposta vencedora: ";
-    cin >> eventos[nEventos].resultadoFinal; // lendo o resultado final daquele evento
-    cin.ignore();
-
-    nEventos++; // contando o novo evento
-}
-
-void CadastraApostas(){
+int IndiceEvento(string eventoEscolhido){
     int i;
-    int iEvento, iAposta; // guardam Ìndices importantes
-    bool eventoExiste = true; // flag de seguranÁa, saber se o evento digitado existe
-    string eventoEscolhido; // string tempor·ria com o nome do evento escolhido
+    bool eventoExiste = true; // flag de seguran√ßa, saber se o evento digitado existe
 
-    cout << "Informe o evento apostado: ";
-    getline(cin, eventoEscolhido); // lendo o evento escolhido
-
-    // procurando o Ìndice com o nome do evento que ser· manipulado
+    // procurando o √≠ndice com o nome do evento que ser√° manipulado
     // e checando se o evento digitado existe
     for (i = 0; i < nEventos; i++){
         if (eventos[i].nomeEvento == eventoEscolhido){
             eventoExiste = true;
             break;
         }
-        eventoExiste = false; // dizendo que evento n„o existe
+        eventoExiste = false; // dizendo que evento n√£o existe
     }
     if (eventoExiste == false){
         cout << "\nEVENTO \"" << eventoEscolhido << "\" NAO EXISTE" << endl;
+        return -1;
+    }
+    return i;
+}
+
+void CriarEvento(){
+    cout << "Digite o nome do evento: ";
+    getline(cin, eventos[nEventos].nomeEvento); // lendo o nome do evento, a √∫nica coisa que o identifica
+
+    nEventos++; // contando o novo evento
+}
+
+void CadastrarGanhador(){
+    int iEvento; // guarda √≠ndice importante
+    string eventoEscolhido;
+
+    cout << "Informe o evento: ";
+    getline(cin, eventoEscolhido); // lendo o evento escolhido
+
+    iEvento = IndiceEvento(eventoEscolhido);
+    if (iEvento == -1){
         return;
     }
 
-    iEvento = i; // Ìndice do evento no array de eventos
-    iAposta = eventos[iEvento].nApostadores; // Ìndice da aposta naquele evento
+    cout << "Informe a aposta vencedora: ";
+    cin >> eventos[iEvento].resultadoFinal; // lendo o resultado final daquele evento
+    cin.ignore();
+}
+
+void CadastraApostas(){
+    int iEvento, iAposta; // guardam √≠ndices importantes
+    string eventoEscolhido; // string tempor√°ria com o nome do evento escolhido
+
+    cout << "Informe o evento apostado: ";
+    getline(cin, eventoEscolhido); // lendo o evento escolhido
+
+    iEvento = IndiceEvento(eventoEscolhido); // √≠ndice do evento no array de eventos
+    if (iEvento == -1){
+        return;
+    }
+    iAposta = eventos[iEvento].nApostadores; // √≠ndice da aposta naquele evento
 
     // lendo o nome do apostador
     cout << "Informe o nome do apostador: ";
     getline(cin, eventos[iEvento].apostas[iAposta].nomeApostador);
 
-    // lendo o n˙mero que o apostador aplicou a aposta
+    // lendo o n√∫mero que o apostador aplicou a aposta
     cout << "Informe a aposta: ";
     cin >> eventos[iEvento].apostas[iAposta].aposta;
 
-    // lendo a numeraÁ„o da cartela do apostador
+    // lendo a numera√ß√£o da cartela do apostador
     cout << "Informe a numeracao da aposta: ";
     cin >> eventos[iEvento].apostas[iAposta].numeroCartela;
 
@@ -76,14 +98,14 @@ void CadastraApostas(){
     cin.ignore();
 
     // somando a quantia apostada ao premio acumulado
-    eventos[i].premioAcumulado += eventos[iEvento].apostas[iAposta].quantiaApostada;
+    eventos[iEvento].premioAcumulado += eventos[iEvento].apostas[iAposta].quantiaApostada;
     eventos[iEvento].nApostadores++; // contando mais um apostador naquele evento
 }
 
 void DeletarAposta(){
-    int apostaDeletar; // inteiro tempor·rio com o n˙mero da cartela que ser· deletada
-    int i, iEvento; // iEvento guarda o Ìndice no array de eventos
-    string eventoDeletar; // string tempor·ria com o evento que ter· a aposta deletada
+    int apostaDeletar; // inteiro tempor√°rio com o n√∫mero da cartela que ser√° deletada
+    int i, iEvento; // iEvento guarda o √≠ndice no array de eventos
+    string eventoDeletar; // string tempor√°ria com o evento que ter√° a aposta deletada
     bool eventoExiste;
 
     cout << "Informe o evento da aposta a ser deletada: ";
@@ -92,29 +114,32 @@ void DeletarAposta(){
     cout << "Informe a cartela a ser deletada: ";
     cin >> apostaDeletar;
 
-    // procurando o Ìndice com o nome do evento que ser· manipulado
+    // procurando o √≠ndice com o nome do evento que ser√° manipulado
     // e checando se o evento digitado existe
     for (i = 0; i < nEventos; i++){
         if (eventos[i].nomeEvento == eventoDeletar){
             eventoExiste = true;
             break;
         }
-        eventoExiste = false; // dizendo que evento n„o existe
+        eventoExiste = false; // dizendo que evento n√£o existe
     }
     if (eventoExiste == false){
         cout << "\nEVENTO \"" << eventoDeletar << "\" NAO EXISTE" << endl;
         return;
     }
 
-    iEvento = i; // guardando o i do for como Ìndice do evento no array de eventos
+    iEvento = IndiceEvento(eventoDeletar); // guardando o i do for como √≠ndice do evento no array de eventos
+    if (iEvento == -1){
+        return;
+    }
 
     // procurando a cartela igual a aposta escolhida para ser deletada
     for (i = 0; i < eventos[iEvento].nApostadores; i++){
         if (eventos[iEvento].apostas[i].numeroCartela == apostaDeletar){
 
-            // chamando o mÈtodo que zera todos os atributos daquela aposta
+            // chamando o m√©todo que zera todos os atributos daquela aposta
             eventos[iEvento].apostas[i].deletarAposta();
-            eventos[iEvento].nApostadores--; // descontando o n˙mero de apostadores naquele evento
+            eventos[iEvento].nApostadores--; // descontando o n√∫mero de apostadores naquele evento
         }
     }
 }
@@ -157,9 +182,6 @@ int main()
         cin >> opcao;
         cin.ignore();
 
-        if (opcao == 5)
-            break;
-
         switch(opcao){
             case 1:
                 CriarEvento();
@@ -173,6 +195,12 @@ int main()
             case 4:
                 RelatorioCasa();
                 break;
+            case 5:
+                CadastrarGanhador();
+                break;
+            case 6:
+                cout << "Encerrando...";
+                return 0;
 
             default:
                 puts("Opcao invalida >> Digite um dos valores informados");
