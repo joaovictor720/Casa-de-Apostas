@@ -2,7 +2,7 @@
 #define EVENTO_H
 #define MAX_APOSTAS 100
 
-#include "Aposta2.h"
+#include "Aposta.h"
 
 class Evento
 {
