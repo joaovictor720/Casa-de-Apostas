@@ -14,8 +14,8 @@ Evento eventos[MAX_EVENTS];
 int nEventos = 0;
 
 // variáveis temporárias para os métodos set
-string nomeEv, nomeApost;
-int aposta, numCart, numApost, result;
+string nomeEv, nomeApost, result, aposta;
+int numCart, numApost;
 float quantia, premio;
 
 void ExibeMenu(){
@@ -69,7 +69,7 @@ void CadastrarGanhador(){
     }
 
     cout << "Informe a aposta vencedora: ";
-    cin >> result; // lendo o resultado final daquele evento
+    getline(cin, result); // lendo o resultado final daquele evento
     eventos[iEvento].setResultado(result);
     cin.ignore();
 }
@@ -94,7 +94,7 @@ void CadastraApostas(){
 
     // lendo o número que o apostador aplicou a aposta
     cout << "Informe a aposta: ";
-    cin >> aposta;
+    getline(cin, aposta);
     eventos[iEvento].apostas[iAposta].setAposta(aposta);
 
     // lendo a numeração da cartela do apostador
@@ -159,7 +159,7 @@ void RelatorioCasa(){
 
             if (eventos[i].apostas[j].getAposta() == eventos[i].getResultado()){
                 cout << "Ganhou" << endl;
-            }else if(eventos[i].getResultado() == 0){
+            }else if(eventos[i].getResultado() == ""){
                 cout << "Indefinido" << endl;
             }else{
                 cout << "Perdeu" << endl;
@@ -207,3 +207,4 @@ int main()
 
     return 0;
 }
+
