@@ -7,7 +7,7 @@ Aposta::Aposta()
 
 void Aposta::deletarAposta(){
     nomeApostador = "";
-    aposta = 0;
+    aposta = "";
     numeroCartela = 0;
     quantiaApostada = 0;
 }
@@ -15,7 +15,7 @@ void Aposta::deletarAposta(){
 void Aposta::setNomeApostador(std::string nome){
     nomeApostador = nome;
 }
-void Aposta::setAposta(int aposta){
+void Aposta::setAposta(std::string aposta){
     this->aposta = aposta;
 }
 void Aposta::setNumeroCartela(int numCart){
@@ -28,7 +28,7 @@ void Aposta::setQuantiaApostada(float quantia){
 std::string Aposta::getNomeApostador(){
     return nomeApostador;
 }
-int Aposta::getAposta(){
+std::string Aposta::getAposta(){
     return aposta;
 }
 int Aposta::getNumeroCartela(){
