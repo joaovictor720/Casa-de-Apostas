@@ -11,18 +11,18 @@ class Aposta
         void deletarAposta(); //zera todos os atributos
 
         void setNomeApostador(std::string nome);
-        void setAposta(int aposta);
+        void setAposta(std::string aposta);
         void setNumeroCartela(int numCart);
         void setQuantiaApostada(float quantia);
 
         std::string getNomeApostador();
-        int getAposta();
+        std::string getAposta();
         int getNumeroCartela();
         float getQuantiaApostada();
 
     private:
         std::string nomeApostador;
-        int aposta;
+        std::string aposta;
         int numeroCartela;
         float quantiaApostada;
 };
