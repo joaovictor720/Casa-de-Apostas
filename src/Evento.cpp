@@ -5,7 +5,7 @@ Evento::Evento()
     nomeEvento = "";
     premioAcumulado = 0;
     nApostadores = 0;
-    resultadoFinal = 0;
+    resultadoFinal = "";
 }
 
 void Evento::setNomeEvento(std::string nome){
@@ -17,7 +17,7 @@ void Evento::setPremio(float premio){
 void Evento::setNumApostadores(int nApostadores){
     this->nApostadores = nApostadores;
 }
-void Evento::setResultado(int result){
+void Evento::setResultado(std::string result){
     resultadoFinal = result;
 }
 
@@ -30,6 +30,6 @@ float Evento::getPremio(){
 int Evento::getNumApostadores(){
     return nApostadores;
 }
-int Evento::getResultado(){
+std::string Evento::getResultado(){
     return resultadoFinal;
 }
