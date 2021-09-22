@@ -71,7 +71,6 @@ void CadastrarGanhador(){
     cout << "Informe a aposta vencedora: ";
     getline(cin, result); // lendo o resultado final daquele evento
     eventos[iEvento].setResultado(result);
-    cin.ignore();
 }
 
 void CadastraApostas(){
