@@ -14,18 +14,18 @@ class Evento
         void setNomeEvento(std::string nome);
         void setPremio(float premio);
         void setNumApostadores(int nApostadores);
-        void setResultado(int result);
+        void setResultado(std::string result);
 
         std::string getNomeEvento();
         float getPremio();
         int getNumApostadores();
-        int getResultado();
+        std::string getResultado();
 
     private:
         std::string nomeEvento;
         float premioAcumulado;
         int nApostadores;
-        int resultadoFinal;
+        std::string resultadoFinal;
 };
 
 #endif // EVENTO_H
