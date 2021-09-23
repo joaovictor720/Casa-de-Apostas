@@ -1,6 +1,6 @@
 #include <iostream>
 #include <iomanip>
-#include "Evento2.h"
+#include "Evento.h"
 // incluindo Evento.h, que já contém a classe Aposta
 
 #define MAX_EVENTS 100
