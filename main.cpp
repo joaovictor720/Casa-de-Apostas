@@ -1,6 +1,6 @@
 #include <iostream>
 #include <iomanip>
-#include "Evento.h"
+#include "Evento2.h"
 // incluindo Evento.h, que já contém a classe Aposta
 
 #define MAX_EVENTS 100
@@ -49,6 +49,7 @@ int IndiceEvento(string eventoEscolhido){
 }
 
 void CriarEvento(){
+    cout << "\n[NOVO EVENTO]\n" << endl;
     cout << "Digite o nome do evento: ";
     getline(cin, nomeEv); // lendo o nome do evento, a única coisa que o identifica
     eventos[nEventos].setNomeEvento(nomeEv);
@@ -60,6 +61,7 @@ void CadastrarGanhador(){
     int iEvento; // guarda índice importante
     string eventoEscolhido;
 
+    cout << "\n[CADASTRAR GANHADOR]\n";
     cout << "Informe o evento: ";
     getline(cin, eventoEscolhido); // lendo o evento escolhido
 
@@ -68,7 +70,7 @@ void CadastrarGanhador(){
         return;
     }
 
-    cout << "Informe a aposta vencedora: ";
+    cout << "Aposta vencedora: ";
     getline(cin, result); // lendo o resultado final daquele evento
     eventos[iEvento].setResultado(result);
 }
@@ -77,7 +79,8 @@ void CadastraApostas(){
     int iEvento, iAposta; // guardam índices importantes
     string eventoEscolhido; // string temporária com o nome do evento escolhido
 
-    cout << "Informe o evento apostado: ";
+    cout << "\n[CADASTRAR APOSTA]\n" << endl;
+    cout << "Evento apostado: ";
     getline(cin, eventoEscolhido); // lendo o evento escolhido
 
     iEvento = IndiceEvento(eventoEscolhido); // índice do evento no array de eventos
@@ -87,25 +90,24 @@ void CadastraApostas(){
     iAposta = eventos[iEvento].getNumApostadores(); // índice da aposta naquele evento
 
     // lendo o nome do apostador
-    cout << "Informe o nome do apostador: ";
+    cout << "Aposta: ";
     getline(cin, nomeApost);
     eventos[iEvento].apostas[iAposta].setNomeApostador(nomeApost);
 
     // lendo o número que o apostador aplicou a aposta
-    cout << "Informe a aposta: ";
+    cout << "Quantia apostada: ";
     getline(cin, aposta);
     eventos[iEvento].apostas[iAposta].setAposta(aposta);
-
-    // lendo a numeração da cartela do apostador
-    cout << "Informe a numeracao da aposta: ";
-    cin >> numCart;
-    eventos[iEvento].apostas[iAposta].setNumeroCartela(numCart);
 
     // lendo quanto dinheiro o apostador apostou
     cout << "Informe a quantia apostada: ";
     cin >> quantia;
     eventos[iEvento].apostas[iAposta].setQuantiaApostada(quantia);
     cin.ignore();
+
+    // registrando nova cartela
+    eventos[iEvento].apostas[iAposta].setNumeroCartela( eventos[iEvento].getNumApostadores() + 1 );
+    cout << "\n[Nova Cartela] >> CARTELA " << eventos[iEvento].apostas[iAposta].getNumeroCartela() << endl;
 
     // somando a quantia apostada ao premio acumulado
     eventos[iEvento].setPremio( eventos[iEvento].getPremio() + eventos[iEvento].apostas[iAposta].getQuantiaApostada());
@@ -117,10 +119,11 @@ void DeletarAposta(){
     int i, iEvento; // iEvento guarda o índice no array de eventos
     string eventoDeletar; // string temporária com o evento que terá a aposta deletada
 
-    cout << "Informe o evento da aposta a ser deletada: ";
+    cout << "\n[DELETAR APOSTA]\n" << endl;
+    cout << "Informe o evento: ";
     getline(cin, eventoDeletar);
 
-    cout << "Informe a cartela a ser deletada: ";
+    cout << "Cartela a deletar: ";
     cin >> apostaDeletar;
 
     iEvento = IndiceEvento(eventoDeletar); // guardando o i do for como índice do evento no array de eventos
@@ -149,7 +152,7 @@ void RelatorioCasa(){
         cout << "-->> EVENTO: " << eventos[i].getNomeEvento() << endl;
         cout << "-->> APOSTA VENCEDORA: " << eventos[i].getResultado() << endl;
         cout << "-->> PREMIO: R$ " << fixed << setprecision(2) << eventos[i].getPremio() << endl;
-        cout << "\nAPOSTA\tAPOSTADOR\tCARTELA\t\tRESULTADO\n";
+        cout << "\nAPOSTA\t\tAPOSTADOR\tCARTELA\t\tRESULTADO\n";
         cout << "--------------------------------------------------------------------\n";
         for (j = 0; j < eventos[i].getNumApostadores(); j ++){
             cout << eventos[i].apostas[j].getAposta() << "\t"
@@ -206,4 +209,3 @@ int main()
 
     return 0;
 }
-
