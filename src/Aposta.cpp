@@ -2,10 +2,11 @@
 
 Aposta::Aposta()
 {
-    //ctor
+    quantiaApostada = 0;
+    premioRecebido = 0;
 }
 
-void Aposta::deletarAposta(){
+Aposta::~Aposta(){
     nomeApostador = "";
     aposta = "";
     numeroCartela = 0;
@@ -24,6 +25,9 @@ void Aposta::setNumeroCartela(int numCart){
 void Aposta::setQuantiaApostada(float quantia){
     quantiaApostada = quantia;
 }
+void Aposta::setPremioRecebido(float premio){
+    premioRecebido = premio;
+}
 
 std::string Aposta::getNomeApostador(){
     return nomeApostador;
@@ -36,4 +40,7 @@ int Aposta::getNumeroCartela(){
 }
 float Aposta::getQuantiaApostada(){
     return quantiaApostada;
+}
+float Aposta::getPremioRecebido(){
+    return premioRecebido;
 }
