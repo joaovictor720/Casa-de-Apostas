@@ -7,10 +7,7 @@ Aposta::Aposta()
 }
 
 Aposta::~Aposta(){
-    nomeApostador = "";
-    aposta = "";
-    numeroCartela = 0;
-    quantiaApostada = 0;
+    // destrutor
 }
 
 void Aposta::setNomeApostador(std::string nome){
