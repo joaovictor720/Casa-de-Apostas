@@ -19,12 +19,12 @@ static float quantia;
 
 void ExibeMenu(){
     cout << "\n----------- Menu -----------\n"
-           "1 - Criar novo evento\n"
-           "2 - Cadastrar aposta\n"
-           "3 - Atualizar aposta\n"
-           "4 - Deletar aposta\n"
-           "5 - Cadastrar Ganhador\n"
-           "6 - Relatorio da Casa\n"
+           "1 - Criar novo evento\n\n"
+           "2 - Cadastrar aposta\n\n"
+           "3 - Atualizar aposta\n\n"
+           "4 - Deletar aposta\n\n"
+           "5 - Cadastrar Ganhador\n\n"
+           "6 - Relatorio da Casa\n\n"
            "7 - Sair\n\n";
 }
 
@@ -53,24 +53,24 @@ void CriarEvento(){
     cout << "Digite o nome do evento: ";
     getline(cin, nomeEv); // lendo o nome do evento, a única coisa que o identifica
     if (nomeEv == "0"){
-        cout << "Saindo..." << endl;
+        cout << "\nSaindo..." << endl;
         return;
     }
-    eventos[nEventos].setNomeEvento(nomeEv);
+    eventos[nEventos].setNomeEvento(nomeEv); // settando o nome do evento
 
-    cout << "\n[Evento Criado] >> " << eventos[nEventos].getNomeEvento() << endl;
+    cout << "\n[EVENTO CRIADO] >> " << eventos[nEventos].getNomeEvento() << endl;
     nEventos++; // contando o novo evento
 }
 
 void CadastrarAposta(){
-    int iEvento, iAposta; // guardam índices importantes
-    string eventoEscolhido; // string temporária com o nome do evento escolhido
+    int iEvento, iAposta;
+    string eventoEscolhido;
 
     cout << "[CADASTRAR APOSTA] <> Insira 0 para cancelar\n" << endl;
     cout << "Evento apostado: ";
-    getline(cin, eventoEscolhido); // lendo o evento escolhido
+    getline(cin, eventoEscolhido); // pesquisando evento
     if (eventoEscolhido == "0"){
-        cout << "Saindo..." << endl;
+        cout << "\nSaindo..." << endl;
         return;
     }
 
@@ -83,14 +83,14 @@ void CadastrarAposta(){
     cout << "Nome do apostador: ";
     getline(cin, nomeApost); // lendo o nome do apostador
     if (nomeApost == "0"){
-        cout << "Saindo..." << endl;
+        cout << "\nSaindo..." << endl;
         return;
     }
 
     cout << "Aposta: ";
     getline(cin, aposta); // lendo o número que o apostador aplicou a aposta
     if (aposta == "0"){
-        cout << "Saindo..." << endl;
+        cout << "\nSaindo..." << endl;
         return;
     }
 
@@ -98,7 +98,7 @@ void CadastrarAposta(){
     cin >> quantia; // lendo quanto dinheiro o apostador apostou
     cin.ignore();
     if (quantia == 0){
-        cout << "Saindo..." << endl;
+        cout << "\nSaindo..." << endl;
         return;
     }
 
@@ -107,11 +107,11 @@ void CadastrarAposta(){
     eventos[iEvento].apostas[iAposta]->setAposta(aposta);
     eventos[iEvento].apostas[iAposta]->setQuantiaApostada(quantia);
     eventos[iEvento].addPremio(quantia); // somando a quantia apostada ao premio total
-    eventos[iEvento].addNumApostadores(); // incrementando número de apostadores
+    eventos[iEvento].addNumApostadores(); // incrementando +1 no número de apostadores
 
     // registrando nova cartela
-    eventos[iEvento].apostas[iAposta]->setNumeroCartela( eventos[iEvento].getNumApostadores() + 1 );
-    cout << "\n[Nova Cartela] >> CARTELA " << eventos[iEvento].apostas[iAposta]->getNumeroCartela() << endl;
+    eventos[iEvento].apostas[iAposta]->setNumeroCartela( eventos[iEvento].getNumApostadores() );
+    cout << "\n[NOVA CARTELA] >> Cartela " << eventos[iEvento].apostas[iAposta]->getNumeroCartela() << endl;
 }
 
 void AtualizarAposta(){
@@ -120,9 +120,9 @@ void AtualizarAposta(){
 
     cout << "[ATUALIZAR APOSTA] <> Insira 0 para cancelar\n" << endl;
     cout << "Informe o evento: ";
-    getline(cin, eventoEscolhido);
+    getline(cin, eventoEscolhido); // pesquisando evento
     if (eventoEscolhido == "0"){
-        cout << "Saindo..." << endl;
+        cout << "\nSaindo..." << endl;
         return;
     }
 
@@ -131,9 +131,9 @@ void AtualizarAposta(){
         return;
 
     cout << "Nome do apostador: ";
-    getline(cin, apostaEscolhida);
+    getline(cin, apostaEscolhida); // pesquisando aposta
     if (apostaEscolhida == "0"){
-        cout << "Saindo..." << endl;
+        cout << "\nSaindo..." << endl;
         return;
     }
 
@@ -141,57 +141,69 @@ void AtualizarAposta(){
     if (iAposta == -1)
         return;
 
-    eventos[iEvento].subPremio(eventos[iEvento].apostas[iAposta]->getQuantiaApostada());
+    // subtraindo, do premio total, a quantia aplicada pelo apostador
+    // isso é para que seja possível atribuir, no premio total, a nova quantia aplicada
+    eventos[iEvento].subPremio( eventos[iEvento].apostas[iAposta]->getQuantiaApostada() );
 
     cout << "Nova aposta: ";
     getline(cin, aposta);
     if (aposta == "0"){
-        cout << "Saindo..." << endl;
+        cout << "\nSaindo..." << endl;
         return;
     }
 
     cout << "Nova quantia apostada: ";
     cin >> quantia;
     if (quantia == 0){
-        cout << "Saindo..." << endl;
+        cout << "\nSaindo..." << endl;
         return;
     }
     cin.ignore();
 
-    eventos[iEvento].apostas[iAposta]->setAposta(aposta);
-    eventos[iEvento].apostas[iAposta]->setQuantiaApostada(quantia);
-    eventos[iEvento].addPremio(eventos[iEvento].apostas[iAposta]->getQuantiaApostada());
+    eventos[iEvento].apostas[iAposta]->setAposta(aposta); // settando a nova aposta lida
+    eventos[iEvento].apostas[iAposta]->setQuantiaApostada(quantia); // settando a nova quantia aplicada
+    eventos[iEvento].addPremio( eventos[iEvento].apostas[iAposta]->getQuantiaApostada() ); // atribuindo a nova quantia aplicada
+
+    cout << "[APOSTA ATUALIZADA] >> Cartela " << eventos[iEvento].apostas[iAposta]->getNumeroCartela() << endl;
 }
 
 void DeletarAposta(){
     int iEvento, iAposta; // iEvento guarda o índice no array de eventos
-    string eventoDeletar, apostaDeletar; // string temporária com o evento que terá a aposta deletada
+    string eventoEscolhido, apostaDeletar; // string temporária com o evento que terá a aposta deletada
 
     cout << "[DELETAR APOSTA] <> Insira 0 para cancelar\n" << endl;
     cout << "Informe o evento: ";
-    getline(cin, eventoDeletar);
-    if (eventoDeletar == "0"){
-        cout << "Saindo..." << endl;
+    getline(cin, eventoEscolhido); // pesquisando evento
+    if (eventoEscolhido == "0"){
+        cout << "\nSaindo..." << endl;
         return;
     }
 
     cout << "Apostador a deletar: ";
-    getline(cin, apostaDeletar);
+    getline(cin, apostaDeletar); // pesquisando aposta para deletar
     if (apostaDeletar == "0"){
-        cout << "Saindo..." << endl;
+        cout << "\nSaindo..." << endl;
         return;
     }
 
-    iEvento = IndiceEvento(eventoDeletar); // guardando o i do for como índice do evento no array de eventos
+    iEvento = IndiceEvento(eventoEscolhido); // guardando o i do for como índice do evento no array de eventos
     if (iEvento == -1)
         return;
 
     iAposta = eventos[iEvento].getIndiceAposta(apostaDeletar);
+    if (iAposta == -1){
+        cout << "APOSTA " << apostaDeletar << " NAO EXISTE" << endl;
+        return;
+    }
 
-    eventos[iEvento].subPremio(eventos[iEvento].apostas[iAposta]->getQuantiaApostada()); // descontando a quantia apostada do premio acumulado
-    eventos[iEvento].subNumApostadores(); // descontando o número de apostadores naquele evento
-    delete eventos[iEvento].apostas[iAposta]; // deletando de fato no endereço do ponteiro para Aposta
-    eventos[iEvento].apostas[iAposta] = NULL;
+    // descontando a quantia apostada do premio acumulado
+    eventos[iEvento].subPremio( eventos[iEvento].apostas[iAposta]->getQuantiaApostada() );
+    if (eventos[iEvento].apostas[iAposta] != NULL){
+        delete eventos[iEvento].apostas[iAposta]; // liberando de fato no endereço do ponteiro para Aposta
+        eventos[iEvento].apostas[iAposta] = NULL; // atribuindo NULL por segurança de acesso à memória
+    }
+
+    cout << "\n[APOSTA DELETADA]" << endl;
 }
 
 void CadastrarGanhador(){
@@ -202,7 +214,7 @@ void CadastrarGanhador(){
     cout << "Informe o evento: ";
     getline(cin, eventoEscolhido); // lendo o evento escolhido
     if (eventoEscolhido == "0"){
-        cout << "Saindo..." << endl;
+        cout << "\nSaindo..." << endl;
         return;
     }
     iEvento = IndiceEvento(eventoEscolhido);
@@ -212,7 +224,7 @@ void CadastrarGanhador(){
     cout << "Aposta vencedora: ";
     getline(cin, result); // lendo o resultado final daquele evento
     eventos[iEvento].setResultado(result);
-    cout << "\n[Ganhador Cadastrado] >> " << eventos[iEvento].getResultado();
+    cout << "\n[GANHADOR CADASTRADO] >> " << eventos[iEvento].getResultado() << endl;
 }
 
 void RelatorioCasa(){
@@ -225,21 +237,23 @@ void RelatorioCasa(){
         cout << "-->> EVENTO: " << eventos[i].getNomeEvento() << endl;
         cout << "-->> APOSTA VENCEDORA: " << eventos[i].getResultado() << endl;
         cout << "-->> PREMIO: R$ " << fixed << setprecision(2) << eventos[i].getPremio() << endl;
-        cout << "\nAPOSTA\tAPOSTADOR\tCARTELA\tRESULTADO\n";
+        cout << "\nAPOSTA\tNOME\tCARTELA\tRESULTADO\n";
         cout << "--------------------------------------------------------------------\n";
 
         for (j = 0; j < eventos[i].getNumApostadores(); j ++){
-            cout << eventos[i].apostas[j]->getAposta() << "\t"
-                 << eventos[i].apostas[j]->getNomeApostador() << "\t"
-                 << setfill('0') << setw(3) << eventos[i].apostas[j]->getNumeroCartela() << "\t";
+            if (eventos[i].apostas[j] != NULL){
+                cout << eventos[i].apostas[j]->getAposta() << "\t"
+                     << eventos[i].apostas[j]->getNomeApostador() << "\t"
+                     << setfill('0') << setw(3) << eventos[i].apostas[j]->getNumeroCartela() << "\t";
 
-            if (eventos[i].apostas[j]->getAposta() == eventos[i].getResultado()){
-                eventos[i].apostas[j]->setPremioRecebido( eventos[i].getRateio() * eventos[i].apostas[j]->getQuantiaApostada() );
-                cout << "Ganhou R$ " << eventos[i].apostas[j]->getPremioRecebido() << endl;
-            }else if(eventos[i].getResultado() == "INDEFINIDO"){
-                cout << "Indefinido" << endl;
-            }else{
-                cout << "Perdeu" << endl;
+                if (eventos[i].apostas[j]->getAposta() == eventos[i].getResultado()){
+                    eventos[i].apostas[j]->setPremioRecebido( eventos[i].getRateio() * eventos[i].apostas[j]->getQuantiaApostada() );
+                    cout << "Ganhou R$ " << eventos[i].apostas[j]->getPremioRecebido() << endl;
+                }else if(eventos[i].getResultado() == "INDEFINIDO"){
+                    cout << "Indefinido" << endl;
+                }else{
+                    cout << "Perdeu" << endl;
+                }
             }
         }
     }
@@ -278,7 +292,7 @@ int main()
                 RelatorioCasa();
                 break;
             case 7:
-                cout << "Encerrando..." << endl;
+                cout << "Encerrando...\n" << endl;
                 return 0;
 
             default:
