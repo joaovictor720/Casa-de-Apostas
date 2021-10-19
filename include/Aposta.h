@@ -23,7 +23,7 @@ class Aposta
         float getQuantiaApostada();
         float getPremioRecebido();
 
-    protected:
+    private:
         std::string nomeApostador;
         std::string aposta;
         int numeroCartela;
