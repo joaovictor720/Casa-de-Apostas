@@ -138,8 +138,10 @@ void AtualizarAposta(){
     }
 
     iAposta = eventos[iEvento].getIndiceAposta(apostaEscolhida);
-    if (iAposta == -1)
+    if (iAposta == -1){
+        cout << "APOSTA \"" << apostaEscolhida << "\" NAO EXISTE" << endl;
         return;
+    }
 
     // subtraindo, do premio total, a quantia aplicada pelo apostador
     // isso é para que seja possível atribuir, no premio total, a nova quantia aplicada
@@ -192,7 +194,7 @@ void DeletarAposta(){
 
     iAposta = eventos[iEvento].getIndiceAposta(apostaDeletar);
     if (iAposta == -1){
-        cout << "APOSTA " << apostaDeletar << " NAO EXISTE" << endl;
+        cout << "APOSTA \"" << apostaDeletar << "\" NAO EXISTE" << endl;
         return;
     }
 
