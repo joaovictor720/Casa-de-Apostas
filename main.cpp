@@ -139,7 +139,7 @@ void AtualizarAposta(){
 
     iAposta = eventos[iEvento].getIndiceAposta(apostaEscolhida);
     if (iAposta == -1){
-        cout << "APOSTA \"" << apostaEscolhida << "\" NAO EXISTE" << endl;
+        cout << "APOSTADOR \"" << apostaEscolhida << "\" NAO EXISTE" << endl;
         return;
     }
 
@@ -166,7 +166,7 @@ void AtualizarAposta(){
     eventos[iEvento].apostas[iAposta]->setQuantiaApostada(quantia); // settando a nova quantia aplicada
     eventos[iEvento].addPremio( eventos[iEvento].apostas[iAposta]->getQuantiaApostada() ); // atribuindo a nova quantia aplicada
 
-    cout << "[APOSTA ATUALIZADA] >> Cartela " << eventos[iEvento].apostas[iAposta]->getNumeroCartela() << endl;
+    cout << "\n[APOSTA ATUALIZADA] >> Cartela " << eventos[iEvento].apostas[iAposta]->getNumeroCartela() << endl;
 }
 
 void DeletarAposta(){
@@ -194,7 +194,7 @@ void DeletarAposta(){
 
     iAposta = eventos[iEvento].getIndiceAposta(apostaDeletar);
     if (iAposta == -1){
-        cout << "APOSTA \"" << apostaDeletar << "\" NAO EXISTE" << endl;
+        cout << "\nAPOSTADOR \"" << apostaDeletar << "\" NAO EXISTE" << endl;
         return;
     }
 
@@ -294,7 +294,7 @@ int main()
                 RelatorioCasa();
                 break;
             case 7:
-                cout << "Encerrando...\n" << endl;
+                cout << "Encerrando..." << endl;
                 return 0;
 
             default:
